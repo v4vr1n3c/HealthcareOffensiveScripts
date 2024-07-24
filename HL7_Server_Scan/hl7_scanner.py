@@ -1,6 +1,7 @@
 import nmap
 import socket
 
+## Escanear uma faixa de IPs (ip_range) em busca de dispositivos com a porta HL7 (2575) aberta.
 def scan_hl7(ip_range, port=2575):
     nm = nmap.PortScanner()
     hl7_devices = []
@@ -16,7 +17,7 @@ def scan_hl7(ip_range, port=2575):
                 print(f"HL7 service confirmed on {host}:{port}")
 
     return hl7_devices
-
+## Tenta estabelecer uma conexão com a aplicação HL7 e enviar uma mensagem de teste HL7. Se uma resposta válida for recebida, considera-se que o serviço HL7 está ativo.
 def check_hl7_service(ip, port):
     hl7_message = "MSH|^~\\&|TEST|TEST|TEST|TEST|20230723120000||ACK^A01|12345|P|2.3.1\r"
     try:
@@ -32,6 +33,7 @@ def check_hl7_service(ip, port):
         print(f"Failed to connect or receive HL7 response from {ip}:{port}")
     return False
 
+## Solicita ao usuário a faixa de IPs a ser escaneada, realiza o scan e imprime os dispositivos que têm serviços HL7.
 if __name__ == "__main__":
     ip_range = input("Enter the IP range to scan (e.g., 192.168.1.0/24): ")
     hl7_devices = scan_hl7(ip_range)
